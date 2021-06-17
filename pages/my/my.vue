@@ -1,6 +1,6 @@
 <template>
 	<view>
-		123
+		<view @click="toLogin">去登录</view>
 	</view>
 </template>
 
@@ -12,7 +12,13 @@
 			}
 		},
 		methods: {
-			
+			toLogin() {
+				
+				this.$Router.push({name:'login'})
+				// uni.redirectTo({
+				//     url: '/pages/login/login'
+				// });
+			}
 		}
 	}
 </script>

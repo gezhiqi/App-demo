@@ -30,8 +30,10 @@
 		}, {
 			"path": "pages/transaction/transaction",
 			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
+				"navigationBarTitleText": "交易中心",
+				"enablePullDownRefresh": false,
+				"navigationBarTextStyle": "black",
+				"navigationBarBackgroundColor": "#FFFFFF"
 			}
 
 		}, {
@@ -39,6 +41,27 @@
 			"style": {
 				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleView": false
+				}
+			}
+
+		}, {
+			"path": "pages/register/register",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleView": false
+				}
 			}
 
 		}

@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "uview-ui": "^1.8.4"
+    "uni-simple-router": "^1.5.5",
+    "uview-ui": "^1.8.4",
+    "vconsole": "^3.7.0"
   }
 }
