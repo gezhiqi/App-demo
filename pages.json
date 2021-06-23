@@ -6,9 +6,12 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "首页",
-				"navigationBarTextStyle": "black",
-				"navigationBarBackgroundColor": "#FFFFFF"
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleView": false
+				}
 			}
 		}, {
 			"path": "pages/mall/mall",
@@ -20,27 +23,14 @@
 			}
 
 		}, {
-			"path": "pages/mine/mine",
-			"style": {
-				"navigationStyle": "custom",
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
-			"path": "pages/transaction/transaction",
-			"style": {
-				"navigationBarTitleText": "交易中心",
-				"enablePullDownRefresh": false,
-				"navigationBarTextStyle": "black",
-				"navigationBarBackgroundColor": "#FFFFFF"
-			}
-
-		}, {
 			"path": "pages/my/my",
 			"style": {
 				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleView": false
+				}
 			}
 		}, {
 			"path": "pages/login/login",
@@ -64,6 +54,49 @@
 				}
 			}
 
+		}, {
+			"path": "pages/forget/forget",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleView": false
+				}
+			}
+
+		}, {
+			"path": "pages/auction/auction",
+			"style": {
+				"navigationBarTitleText": "",
+				"backgroundColorTop": "#FFFFFF", // iOS下拉bounce回弹区域的颜色 (与down.bgColor同步)
+				"backgroundColorBottom": "#FFFFFF", // iOS上拉bounce回弹区域的颜色 (与up.bgColor同步)
+				"disableScroll": false, //删除此项: mescroll-body必须允许原生页面滚动, 默认false
+				"enablePullDownRefresh": false, //删除此项: 不开启系统自带的下拉刷新, 默认false
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleView": false,
+					"bounce": "none" //可选: 是否禁止iOS回弹和Android触顶触底的弧形阴影, 默认允许 (可配在 'globalStyle')
+				},
+				"mp-alipay": {
+					"allowsBounceVertical": "NO"
+				} //可选: 取消支付宝和钉钉小程序的iOS回弹 (可配在 'globalStyle')
+			},
+			"globalStyle": {
+				"backgroundColorTop": "#FFFFFF" // iOS APP真机bounce回弹区域默认灰色,建议统一重置为白色
+			}
+
+		}, {
+			"path": "pages/announce/announce",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom",
+				"app-plus": {
+					"titleView": false
+				}
+			}
+
 		}
 	],
 	"globalStyle": {
@@ -73,9 +106,9 @@
 		"backgroundColor": "#F8F8F8"
 	},
 	"tabBar": {
-		"color": "#999999",
+		"color": "#ced3e1",
 		"selectedColor": "#00C57F",
-		"backgroundColor": "#fff",
+		"backgroundColor": "#150e2d",
 		"list": [{
 				"pagePath": "pages/index/index",
 				"iconPath": "static/index-copy.png",
@@ -83,22 +116,22 @@
 				"text": "首页"
 			},
 			{
-				"pagePath": "pages/mall/mall",
+				"pagePath": "pages/auction/auction",
 				"iconPath": "static/zhiyamingxichaxun.png",
 				"selectedIconPath": "static/zhiyamingxichaxun-select.png",
-				"text": "质押"
+				"text": "拍卖"
 			},
 			{
-				"pagePath": "pages/mine/mine",
+				"pagePath": "pages/mall/mall",
 				"iconPath": "static/mineral.png",
 				"selectedIconPath": "static/mineral-select.png",
-				"text": "矿机"
+				"text": "商城"
 			},
 			{
-				"pagePath": "pages/transaction/transaction",
+				"pagePath": "pages/announce/announce",
 				"iconPath": "static/jiaoyi.png",
 				"selectedIconPath": "static/jiaoyi-select.png",
-				"text": "交易"
+				"text": "公告"
 			},
 			{
 				"pagePath": "pages/my/my",

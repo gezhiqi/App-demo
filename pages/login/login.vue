@@ -47,7 +47,7 @@
 					></u-image>
 				</u-form-item>
 			</u-form>
-			<view class="forgot">忘记密码？</view>
+			<view class="forget" @click="goForget">忘记密码？</view>
 		</view>
 		<view class="login_submit"><u-button type="primary" @click="loginOn">登录</u-button></view>
 		<view class="registered-download">
@@ -204,6 +204,9 @@ export default {
 					}
 				}
 			};
+		},
+		goForget() {
+			uni.navigateTo({url: '/pages/forget/forget'})
 		}
 	}
 };
@@ -260,7 +263,7 @@ export default {
 				}
 			}
 		}
-		.forgot {
+		.forget {
 			margin-top: 30rpx;
 			font-size: 28rpx;
 			color: rgb(95, 88, 116);

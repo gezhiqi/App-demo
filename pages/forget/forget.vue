@@ -1,9 +1,9 @@
 <template>
-	<view class="register">
+	<view class="forget-root">
 		<view class="header">
 			<view class="left" @click="goBack"></view>
-			<view class="center">注册</view>
-			<view class="right">登录</view>
+			<view class="center">修改/忘记密码</view>
+			<view class="right" @click="goLogin">登录</view>
 		</view>
 		<view class="container">
 			<view class="container-form">
@@ -20,56 +20,28 @@
 					</u-form-item>
 					<u-form-item label-width="auto" label="设置密码:">
 						<u-input
-							type="password"
-							v-model="form.loginPw"
+							maxlength="11"
+							v-model="form.telephone"
 							trim
 							:clearable="false"
-							placeholder="请设置登录密码"
+							placeholder="请设置新的登录密码"
 							placeholder-style="color: rgb(95, 88, 116);"
 						/>
 					</u-form-item>
 					<u-form-item label-width="auto" label="确认密码:">
 						<u-input
-							type="password"
-							v-model="form.showLoginPw"
+							maxlength="11"
+							v-model="form.telephone"
 							trim
 							:clearable="false"
-							placeholder="请确认登录密码"
-							placeholder-style="color: rgb(95, 88, 116);"
-						/>
-					</u-form-item>
-					<u-form-item label-width="auto" label="安全密码:">
-						<u-input
-							type="password"
-							v-model="form.payPw"
-							trim
-							:clearable="false"
-							placeholder="请设置安全密码"
-							placeholder-style="color: rgb(95, 88, 116);"
-						/>
-					</u-form-item>
-					<u-form-item label-width="auto" label="确认安密:">
-						<u-input
-							type="password"
-							v-model="form.showPayPw"
-							trim
-							:clearable="false"
-							placeholder="请确认安全密码"
-							placeholder-style="color: rgb(95, 88, 116);"
-						/>
-					</u-form-item>
-					<u-form-item label-width="auto" label="邀 请 码:">
-						<u-input
-							v-model="form.invitacode"
-							trim
-							:clearable="false"
-							placeholder="请输入邀请码"
+							placeholder="请确认新的登录密码"
 							placeholder-style="color: rgb(95, 88, 116);"
 						/>
 					</u-form-item>
 					<u-form-item label-width="auto" label="短 信 码:">
 						<u-input
-							v-model="form.smscode"
+							maxlength="11"
+							v-model="form.telephone"
 							trim
 							:clearable="false"
 							placeholder="请输入验证码"
@@ -82,13 +54,6 @@
 					</u-form-item>
 				</u-form>
 			</view>
-			<view class="protocol">
-				注册即为同意
-				<text>《用户注册协议》</text>
-			</view>
-			<view class="register_submit">
-				<u-button type="primary" @click="registerBtn">注册</u-button>
-			</view>
 		</view>
 	</view>
 </template>
@@ -100,14 +65,9 @@ export default {
 			form: {
 				telephone: '',
 				loginPw: '',
-				showLoginPw: '',
-				payPw: '',
-				showPayPw: '',
-				invitacode: '',
-				smscode: ''
+				captcha: ''
 			},
-			timer: null,
-			count: ''
+			count:0
 		};
 	},
 	methods: {
@@ -132,25 +92,6 @@ export default {
 				}, 1000);
 			}
 		},
-		registerBtn() {
-			console.log(this.$api);
-			// this.$Router.push({name:'my'})
-			// uni.switchTab({
-			// 	url: '/pages/index/index'
-			// });
-			this.$api
-				.register({
-					...this.form
-				})
-				.then(res => {
-					console.log(res);
-					this.$Router.push({name:'index'})
-				})
-				.catch(err => {
-					console.log(err);
-					this.$Router.push({name:'my'})
-				});
-		},
 		getSmsCode() {
 			this.getCode();
 			this.$api
@@ -163,13 +104,16 @@ export default {
 				.catch(err => {
 					console.log(err);
 				});
+		},
+		goLogin() {
+			uni.redirectTo({url: '/pages/login/login'})
 		}
 	}
 };
 </script>
 
 <style lang="scss">
-.register {
+.forget-root {
 	min-height: 100vh;
 	padding-top: 60rpx;
 	background-color: #150e2d;

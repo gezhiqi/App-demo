@@ -16,6 +16,13 @@ const login = [
 	        title: '注册',
 	    },
 	},
+	{
+	    path: '/pages/forget/forget',
+	    name: 'forget',
+	    meta: {
+	        title: '忘记密码',
+	    },
+	},
 	
 ]
 export default login

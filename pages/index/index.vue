@@ -1,6 +1,7 @@
 <template>
-	<view class="index-root">
-		<view class="wrap"><u-swiper :effect3d="true" :list="list"></u-swiper></view>
+	<view class="index-root" :style="{ paddingTop: statusBarHeight + 40 + 'px' }">
+		<common-title>首页</common-title>
+		<view class="wrap"><u-swiper :list="list"></u-swiper></view>
 		<view class="lead">
 			<view class="lead-item" v-for="(item, index) in leadList" :key="index">
 				<u-image width="90rpx" height="90rpx" :src="item.src"></u-image>
@@ -10,7 +11,7 @@
 		<view class="real-name">
 			<u-image width="100%" height="132rpx" src="../../static/shiming.png"></u-image>
 		</view>
-		<view class="sign-in-box">
+		<!-- <view class="sign-in-box">
 			<view class="sign-in-title">签到</view>
 			<view class="sign-in">
 				<view class="sign-in-item" v-for="item in dayList" :key="item">
@@ -19,8 +20,8 @@
 				</view>
 			</view>
 			<view class="btn-box"><view class="btn">立即签到</view></view>
-		</view>
-		<view class="news">
+		</view> -->
+		<!-- <view class="news">
 			<view class="news-title-box">
 				<view class="news-title">研报资讯</view>
 				<u-icon name="arrow-right" size="32"></u-icon>
@@ -41,16 +42,30 @@
 					</view>
 				</view>
 			</view>
+		</view> -->
+		<view class="trading-center">
+			<view class="trading-title">交易中心</view>
+			<view class="item-session">
+				<view class="item-title">上午专场</view>
+				<view class="img"></view>
+			</view>
+			<view class="item-session">
+				<view class="item-title">下午专场</view>
+				<view class="img"></view>
+			</view>
 		</view>
 	</view>
 </template>
 
 <script>
+import commonTitle from '@/components/common-title/common-title.vue';
 export default {
 	data() {
 		return {
+			statusBarHeight: 0,
+			titleHeight: 0,
 			title: 'Hello',
-			list: ['../../static/1.jpg', '../../static/2.jpg', '../../static/3.jpg'],
+			list: [],
 			leadList: [
 				{
 					src: '../../static/lead-1.png',
@@ -72,14 +87,46 @@ export default {
 			dayList: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
 		};
 	},
+	components: {
+		commonTitle
+	},
+	created() {
+		let that = this;
+		uni.getSystemInfo({
+			success: res => {
+				that.statusBarHeight = res.statusBarHeight;
+			}
+		});
+		this.getTabbarList();
+	},
+
 	onLoad() {},
-	methods: {}
+	methods: {
+		getTabbarList() {
+			this.$api.getTabbarList().then(res => {
+				let { data, code } = res.data;
+				if (code === 200) {
+					this.list = data.map(item => {
+						return item.imageUrl
+					});
+					console.log(this.list)
+				}
+			});
+		}
+	}
 };
 </script>
 
 <style lang="scss">
+uni-page-body {
+	height: 100%;
+}
 .index-root {
-	padding: 0 30rpx;
+	padding: 60rpx 30rpx 100rpx;
+	background-color: #150e2d;
+	min-height: 100%;
+	color: #ced3e1;
+
 	.lead {
 		display: flex;
 		margin-top: 40rpx;
@@ -196,6 +243,42 @@ export default {
 						padding-bottom: 10rpx;
 					}
 				}
+			}
+		}
+	}
+	.trading-center {
+		padding-top: 20rpx;
+		.trading-title {
+			padding: 20rpx;
+			font-size: 34rpx;
+			position: relative;
+			&::after {
+				position: absolute;
+				left: 0;
+				top: 50%;
+				transform: translateY(-50%);
+				content: '';
+				width: 10rpx;
+				height: 30rpx;
+				background: -webkit-linear-gradient(225deg, #fe9e2c, #fb402d);
+				background: linear-gradient(225deg, #fe9e2c, #fb402d);
+				border-radius: 6rpx;
+			}
+		}
+
+		.item-session {
+			padding: 20rpx 0 30rpx;
+			background-color: #1e1c41;
+			border-radius: 12rpx;
+			.item-title {
+				font-size: 30rpx;
+				padding: 0 40rpx 20rpx;
+			}
+			.img {
+				width: 100%;
+				height: 300rpx;
+				background: url('../../static/2.jpg') no-repeat center center;
+				background-size: contain;
 			}
 		}
 	}

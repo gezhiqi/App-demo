@@ -31,3 +31,8 @@ export const sendForget = (data) => {
 		method:'POST'
 	})
 }
+
+
+
+
+ 

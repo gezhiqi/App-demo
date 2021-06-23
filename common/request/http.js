@@ -6,7 +6,7 @@ export default function $http(options) {
 			method: options.method || 'GET',
 			data: options.data || {},
 			header: {
-				Authorization: uni.getStorageSync('token')
+				accessToken: uni.getStorageSync('token')
 			},
 			success: (res) => {
 				if (res == '') {
