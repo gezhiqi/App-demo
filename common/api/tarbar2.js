@@ -15,3 +15,21 @@ export const getShopList = (data) => {
 		method:'POST'
 	})
 }
+
+// 查询商品详情
+export const getShopDetail = (data) => {
+	return $http({
+		url:'/app/shop/select',
+		data,
+		method:'POST'
+	})
+}
+
+// 商品购买
+export const createdOrder = (data) => {
+	return $http({
+		url:'/app/order/buy',
+		data,
+		method:'POST'
+	})
+}

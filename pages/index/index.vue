@@ -3,12 +3,12 @@
 		<common-title>首页</common-title>
 		<view class="wrap"><u-swiper :list="list"></u-swiper></view>
 		<view class="lead">
-			<view class="lead-item" v-for="(item, index) in leadList" :key="index">
+			<view class="lead-item" v-for="(item, index) in leadList" :key="index" @click="showToast">
 				<u-image width="90rpx" height="90rpx" :src="item.src"></u-image>
 				<view>{{ item.desc }}</view>
 			</view>
 		</view>
-		<view class="real-name">
+		<view class="real-name" @click="showToast">
 			<u-image width="100%" height="132rpx" src="../../static/shiming.png"></u-image>
 		</view>
 		<!-- <view class="sign-in-box">
@@ -54,11 +54,11 @@
 				<view class="img"></view>
 			</view>
 		</view>
+		<u-toast ref="uToast" />
 	</view>
 </template>
 
 <script>
-import commonTitle from '@/components/common-title/common-title.vue';
 export default {
 	data() {
 		return {
@@ -87,9 +87,7 @@ export default {
 			dayList: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
 		};
 	},
-	components: {
-		commonTitle
-	},
+
 	created() {
 		let that = this;
 		uni.getSystemInfo({
@@ -112,13 +110,19 @@ export default {
 					console.log(this.list)
 				}
 			});
+		},
+		showToast() {
+			this.$refs.uToast.show({
+				title: '暂未开放'
+			});
 		}
 	}
 };
 </script>
 
 <style lang="scss">
-uni-page-body {
+uni-page-body,
+body{
 	height: 100%;
 }
 .index-root {
@@ -126,6 +130,7 @@ uni-page-body {
 	background-color: #150e2d;
 	min-height: 100%;
 	color: #ced3e1;
+	box-sizing: border-box;
 
 	.lead {
 		display: flex;

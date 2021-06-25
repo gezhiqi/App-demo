@@ -117,6 +117,7 @@ export default {
 	min-height: 100vh;
 	padding-top: 60rpx;
 	background-color: #150e2d;
+	box-sizing: border-box;
 	.header {
 		padding: 0 30rpx;
 		height: 90rpx;

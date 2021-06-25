@@ -90,6 +90,7 @@
 				<u-button type="primary" @click="registerBtn">注册</u-button>
 			</view>
 		</view>
+		<u-toast ref="uToast" />
 	</view>
 </template>
 
@@ -111,6 +112,54 @@ export default {
 		};
 	},
 	methods: {
+		validate() {
+			let scope = this;
+			return {
+				telephone() {
+					if (scope.form.telephone === '' || scope.form.telephone === null) {
+						scope.$refs.uToast.show({
+							title: '手机号不能为空',
+							type: 'error'
+						});
+						return false;
+					}
+					if (!/^1\d{10}$/.test(scope.form.telephone)) {
+						scope.$refs.uToast.show({
+							title: '手机格式不正确',
+							type: 'error'
+						});
+						return false;
+					} else {
+						return true;
+					}
+				},
+				loginPw() {
+					if (
+						!/^(?![^A-Za-z]+$)(?![^0-9]+$)[\x21-x7e]{6,18}$/.test(scope.form.loginPw) ||
+						scope.form.loginPw === ''
+					) {
+						scope.$refs.uToast.show({
+							title: '密码必须包含字母和数字6-18位',
+							type: 'error'
+						});
+						return false;
+					} else {
+						return true;
+					}
+				},
+				captcha() {
+					if (scope.form.smscode !== '') {
+						return true;
+					} else {
+						scope.$refs.uToast.show({
+							title: '验证码不能为空',
+							type: 'error'
+						});
+						return false;
+					}
+				}
+			};
+		},
 		goBack() {
 			uni.navigateBack(1);
 		},
@@ -133,32 +182,68 @@ export default {
 			}
 		},
 		registerBtn() {
-			console.log(this.$api);
-			// this.$Router.push({name:'my'})
-			// uni.switchTab({
-			// 	url: '/pages/index/index'
-			// });
+			if (!this.validate().telephone()) {
+				return false;
+			}
+			if (!this.validate().loginPw()) {
+				return false;
+			}
+			if (!this.validate().captcha()) {
+				return false;
+			}
+			if (this.form.payPw.length === 0) {
+				this.$refs.uToast.show({
+					title: '安全密码不能为空',
+					type: 'error',
+				});
+				return false;
+			}
+			if (this.form.loginPw !== this.form.showLoginPw) {
+				this.$refs.uToast.show({
+					title: '两次密码不一致',
+					type: 'error',
+				});
+				return false;
+			}
+			
+			if (this.form.payPw !== this.form.showPayPw) {
+				this.$refs.uToast.show({
+					title: '两次安全密码不一致',
+					type: 'error',
+				});
+				return false;
+			}
 			this.$api
 				.register({
 					...this.form
 				})
 				.then(res => {
-					console.log(res);
-					this.$Router.push({name:'index'})
+					this.$refs.uToast.show({
+						title: '注册成功',
+						type: 'success',
+					});
+					setTimeout(() => {
+						this.$Router.push({ name: 'index' });
+					}, 1000);
+					
 				})
 				.catch(err => {
-					console.log(err);
-					this.$Router.push({name:'my'})
+					// console.log(err);
+					// this.$Router.push({ name: 'my' });
 				});
 		},
 		getSmsCode() {
+			if (this.form.telephone)
 			this.getCode();
 			this.$api
 				.sendRegister({
 					telephone: this.form.telephone
 				})
 				.then(res => {
-					console.log(res);
+					this.$refs.uToast.show({
+						title: '短信发送成功轻查收',
+						type: 'success',
+					});
 				})
 				.catch(err => {
 					console.log(err);
@@ -173,6 +258,7 @@ export default {
 	min-height: 100vh;
 	padding-top: 60rpx;
 	background-color: #150e2d;
+	box-sizing: border-box;
 	.header {
 		padding: 0 30rpx;
 		height: 90rpx;

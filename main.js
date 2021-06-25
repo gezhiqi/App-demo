@@ -4,7 +4,10 @@ import router from './router'
 import { RouterMount } from 'uni-simple-router'
 import uView from "uview-ui";
 import api from './common/api/index.js'
+import CommonTitle from "./components/common-title/common-title.vue"
 // import Vconsole from 'vconsole';
+
+Vue.component('common-title', CommonTitle)
 
 Vue.prototype.$api = api
 Vue.use(uView);

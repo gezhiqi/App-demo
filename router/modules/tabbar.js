@@ -10,9 +10,16 @@ const tabbar = [{
 	},
 	{
 		path: '/pages/auction/auction',
-		name: 'mine',
+		name: 'auction',
 		meta: {
 			title: '拍卖',
+		},
+	},
+	{
+		path: '/pages/auction-detail/auction-detail',
+		name: 'auction-detail',
+		meta: {
+			title: '详情',
 		},
 	},
 	{
@@ -23,7 +30,7 @@ const tabbar = [{
 		},
 	}, {
 		path: '/pages/announce/announce',
-		name: 'transaction',
+		name: 'announce',
 		meta: {
 			title: '公告',
 		},

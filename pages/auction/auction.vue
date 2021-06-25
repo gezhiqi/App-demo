@@ -9,7 +9,12 @@
 			:up="upOption"
 		>
 			<view class="list">
-				<view class="list-item" v-for="item in dataList" :key="item.id">
+				<view
+					class="list-item"
+					v-for="item in dataList"
+					:key="item.id"
+					@click="toDetails(item)"
+				>
 					<view
 						class="img"
 						:style="{ 'background-image': `url(${item.contentImg})` }"
@@ -24,7 +29,6 @@
 
 <script>
 import { BASE_URL } from '../../common/request/http.js';
-import commonTitle from '@/components/common-title/common-title.vue';
 import MescrollMixin from '@/uni_modules/mescroll-uni/components/mescroll-uni/mescroll-mixins.js';
 
 export default {
@@ -69,32 +73,15 @@ export default {
 					console.log(err);
 				});
 		},
-		// getShopList() {
-		// 	this.$api
-		// 		.getShopList({
-		// 			currPage: 1,
-		// 			pageSize: 10,
-		// 			playCode: this.morningCode
-		// 		})
-		// 		.then(res => {
-		// 			console.log('商品列表', res);
-		// 			if (res.data.code === 200) {
-		// 				this.dataList = res.data.data.records;
-		// 				console.log(this.dataList);
-		// 			}
-		// 		})
-		// 		.catch(err => {
-		// 			console.log(err);
-		// 		});
-		// },
+
 		downCallback() {
 			this.mescroll.resetUpScroll();
 		},
 		/*上拉加载的回调*/
-		async upCallback(page) {
+		 upCallback(page) {
 			let pageNum = page.num; // 页码, 默认从1开始
 			let pageSize = page.size; // 页长, 默认每页10条
-			await this.getSession();
+
 			console.log(pageNum, pageSize, this.morningCode);
 			// 获取专场code
 			this.$api
@@ -113,7 +100,7 @@ export default {
 						})
 						.then(res => {
 							console.log('商品列表', res);
-							
+
 							if (res.data.code === 200) {
 								// this.dataList = ;
 								console.log(this.dataList);
@@ -147,20 +134,35 @@ export default {
 				.catch(err => {
 					console.log(err);
 				});
+		},
+		toDetails(item) {
+			if (item.openPurchase == '1') {
+				this.$refs.uToast.show({
+					title: '已售完',
+				});
+				return false;
+			}
+			this.$Router.push({path:'/pages/auction-detail/auction-detail',query: { id: item.id }})
+			// this.$Router.push({ name: 'auction-detail'})
+			// uni.navigateTo({
+			// 	url:`/pages/auction-detail/auction-detail?id=${id}`
+			// })
 		}
 	}
 };
 </script>
 
 <style lang="scss">
-uni-page-body {
+uni-page-body,
+body{
 	height: 100%;
 }
 .auction-root {
-	padding: 60rpx 30rpx 100rpx;
+	padding: 60rpx 30rpx 60rpx;
 	background-color: #150e2d;
 	min-height: 100%;
 	color: #ced3e1;
+	box-sizing: border-box;
 	/* #1e1c41 */
 	.list {
 		display: flex;
@@ -174,11 +176,12 @@ uni-page-body {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
+			border-radius: 10rpx;
 			.img {
 				position: relative;
 				width: 300rpx;
 				height: 200rpx;
-				background: url('../../static/10205.jpg') no-repeat center center;
+				background: no-repeat center center;
 				background-size: contain;
 				// .tips {
 				// 	position: absolute;

@@ -2,7 +2,7 @@
 	<view class="login">
 		<view class="login-form">
 			<view class="title">
-				<view class="title-f">欢迎来到SHUBI</view>
+				<view class="title-f">欢迎来到Draw the world</view>
 				<view class="title-t">请登录</view>
 			</view>
 			<u-form :model="form" ref="uForm">
@@ -20,6 +20,7 @@
 				<u-form-item prop="loginPw">
 					<image class="icon" src="../../static/mima.png"></image>
 					<u-input
+						type="password"
 						v-model="form.loginPw"
 						trim
 						:clearable="false"
@@ -120,14 +121,17 @@ export default {
 		},
 		loginOn() {
 			if (!this.validate().telephone()) {
-				return false
+				return false;
 			}
 			if (!this.validate().loginPw()) {
-				return false
+				return false;
 			}
 			if (!this.validate().captcha()) {
-				return false
+				return false;
 			}
+			uni.showLoading({
+				title: '正在登录'
+			});
 			let index = this.$refs.vfCode.src.indexOf('uuid');
 			let uuid = this.$refs.vfCode.src.slice(index + 5);
 			this.$api
@@ -142,10 +146,17 @@ export default {
 							title: '登录成功',
 							type: 'success'
 						});
-						uni.switchTab({
-							url: '/pages/index/index'
-						});
+						
+						setTimeout(() => {
+							uni.hideLoading();
+							uni.switchTab({
+								url: '/pages/index/index'
+							});
+						}, 1000);
+						
+						uni.setStorageSync('telephone', this.form.telephone);
 					} else {
+						uni.hideLoading();
 						this.$refs.uToast.show({
 							title: res.data.msg,
 							type: 'error'
@@ -154,6 +165,7 @@ export default {
 					}
 				})
 				.catch(err => {
+					uni.hideLoading();
 					console.log(err);
 				});
 		},
@@ -165,7 +177,7 @@ export default {
 			return {
 				telephone() {
 					if (scope.form.telephone === '' || scope.form.telephone === null) {
-						 scope.$refs.uToast.show({
+						scope.$refs.uToast.show({
 							title: '手机号不能为空',
 							type: 'error'
 						});
@@ -182,7 +194,10 @@ export default {
 					}
 				},
 				loginPw() {
-					if (!/^(?![^A-Za-z]+$)(?![^0-9]+$)[\x21-x7e]{6,18}$/.test(scope.form.loginPw) || scope.form.telephone === '') {
+					if (
+						!/^(?![^A-Za-z]+$)(?![^0-9]+$)[\x21-x7e]{6,18}$/.test(scope.form.loginPw) ||
+						scope.form.loginPw === ''
+					) {
 						scope.$refs.uToast.show({
 							title: '密码必须包含字母和数字6-18位',
 							type: 'error'
@@ -206,7 +221,7 @@ export default {
 			};
 		},
 		goForget() {
-			uni.navigateTo({url: '/pages/forget/forget'})
+			uni.navigateTo({ url: '/pages/forget/forget' });
 		}
 	}
 };
@@ -277,7 +292,7 @@ export default {
 		justify-content: space-between;
 		color: rgb(60, 120, 250);
 		font-size: 28rpx;
-		margin-top: 10rpx;
+		margin-top: 20rpx;
 	}
 }
 </style>

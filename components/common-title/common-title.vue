@@ -1,11 +1,19 @@
 <template>
-	<view :style="{paddingTop: statusBarHeight+'px'}" class="title"><slot></slot></view>
+	<view :style="{ paddingTop: statusBarHeight + 'px'}" class="title">
+		<view v-if="isBack" class="back" @click="goBack"></view>
+		<slot></slot>
+	</view>
 </template>
 
 <script>
 export default {
-	name: 'title',
-
+	name: 'CommonTitle',
+	props: {
+		isBack: {
+			type: Boolean,
+			default: false
+		}
+	},
 	data() {
 		return {
 			statusBarHeight: 0
@@ -18,6 +26,11 @@ export default {
 				that.statusBarHeight = res.statusBarHeight;
 			}
 		});
+	},
+	methods: {
+		goBack() {
+			uni.navigateBack(1);
+		}
 	}
 };
 </script>
@@ -32,10 +45,17 @@ export default {
 	line-height: 40px;
 	text-align: center;
 	color: #ced3e1;
-	font-size: 36rpx;
+	font-size: 34rpx;
 	z-index: 99;
-	    background-image: linear-gradient(
-	45deg
-	,#110e2a,#110e2a);
+	background-image: linear-gradient(45deg, #110e2a, #110e2a);
+	.back {
+		position: absolute;
+		left: 30rpx;
+		bottom: 26rpx;
+		width: 36rpx;
+		height: 36rpx;
+		background: url('../../static/back.png') no-repeat center center;
+		background-size: 100% 100%;
+	}
 }
 </style>
