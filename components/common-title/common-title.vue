@@ -2,6 +2,9 @@
 	<view :style="{ paddingTop: statusBarHeight + 'px'}" class="title">
 		<view v-if="isBack" class="back" @click="goBack"></view>
 		<slot></slot>
+		<view v-if="$slots.right" class="right">
+			<slot name="right"></slot>
+		</view>
 	</view>
 </template>
 
@@ -45,7 +48,7 @@ export default {
 	line-height: 40px;
 	text-align: center;
 	color: #ced3e1;
-	font-size: 34rpx;
+	font-size: 32rpx;
 	z-index: 99;
 	background-image: linear-gradient(45deg, #110e2a, #110e2a);
 	.back {
@@ -56,6 +59,14 @@ export default {
 		height: 36rpx;
 		background: url('../../static/back.png') no-repeat center center;
 		background-size: 100% 100%;
+	}
+	.right {
+		font-size: 24rpx;
+		position: absolute;
+		right: 30rpx;
+		bottom: 20rpx;
+		line-height: 36rpx;
+
 	}
 }
 </style>

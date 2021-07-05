@@ -9,10 +9,10 @@ const tabbar = [{
 		},
 	},
 	{
-		path: '/pages/auction/auction',
-		name: 'auction',
+		path: '/pages/pledge/pledge',
+		name: 'pledge',
 		meta: {
-			title: '拍卖',
+			title: '质押',
 		},
 	},
 	{

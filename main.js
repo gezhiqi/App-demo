@@ -9,6 +9,16 @@ import CommonTitle from "./components/common-title/common-title.vue"
 
 Vue.component('common-title', CommonTitle)
 
+Vue.prototype.checkLogin = function(){
+	const token = uni.getStorageSync('token')
+	if(token === ''){ // 本地没有token表示未登录
+		console.log('未登录返回到登录页')
+		uni.reLaunch({url:'/pages/login/login'})
+		return false
+	}
+}
+
+
 Vue.prototype.$api = api
 Vue.use(uView);
 // new Vconsole();

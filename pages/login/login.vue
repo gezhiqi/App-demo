@@ -106,6 +106,10 @@ export default {
 	mounted() {
 		this.refreshCode();
 	},
+onBackPress(options) {
+        console.log('from:' + options.from)
+		return true
+    },
 	// onReady() {
 	// 	console.log('onload123');
 	// 	this.$refs.uForm.setRules(this.rules);
